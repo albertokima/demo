@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoApplication {
 
 	private static final String verify_token = "demo";
+	private static final String whatsapp_token = "EABZCZAzT6fLAUBABuV7uBgacbpbkMpBAtfBid7cV8v3n5a90mYJjkZCZCYEiFuAlDD1AhHw5ebZCfgVMrGhy1TrJFpbY4ZCTczmSwgZClFfjHy9uTfTyrbTGIlWAZAyrZC1CWZAXvDCcE00uvu7F0fYtJth6N2uSkYRyUsOY5fXHHhEVPk8gtzufayfbwkdNVx2ONZAuDN313SiMuRbGbRkeHSy9ZArD4ZA2POHwZD";
 
 	@GetMapping
-	public ResponseEntity<String> home(HttpServletRequest request, @RequestParam Map<String,String> hub) {
+	public ResponseEntity<String> validate(HttpServletRequest request, @RequestParam Map<String,String> hub) {
 		hub.entrySet().forEach(h->{
 			System.out.println(h.getKey() + ":" + h.getValue());
 		});
@@ -45,6 +48,14 @@ public class DemoApplication {
 		return ResponseEntity.badRequest().build();
 	}
 
+	@PostMapping
+	public ResponseEntity<?> home(HttpServletRequest request, @RequestBody Object entry) {
+		System.out.println(request.toString());
+		System.out.println(entry.toString());
+		return ResponseEntity.ok().build();
+//		return ResponseEntity.badRequest().build();
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
