@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 @SpringBootApplication
 @RestController
@@ -55,8 +55,8 @@ public class DemoApplication {
 		System.out.println(entry.toString());
 		try
 		{
-			ObjectMapper mapper = new ObjectMapper();
-			System.out.println(mapper.readValue(entry.toString(), Object.class).toString());
+			Gson gson = new Gson();
+			System.out.println("Json:"+gson.toJson(entry));
 		}
 		catch(Exception e)
 		{
