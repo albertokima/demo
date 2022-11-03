@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoApplication {
 
 	private static final String verify_token = "demo";
-	private static final String whatsapp_token = "EABZCZAzT6fLAUBABuV7uBgacbpbkMpBAtfBid7cV8v3n5a90mYJjkZCZCYEiFuAlDD1AhHw5ebZCfgVMrGhy1TrJFpbY4ZCTczmSwgZClFfjHy9uTfTyrbTGIlWAZAyrZC1CWZAXvDCcE00uvu7F0fYtJth6N2uSkYRyUsOY5fXHHhEVPk8gtzufayfbwkdNVx2ONZAuDN313SiMuRbGbRkeHSy9ZArD4ZA2POHwZD";
+	private static final String whatsapp_token = "EABZCZAzT6fLAUBAF8qXZAHnHmAuDfTLcaCFbZAIDBkoGogwtRY7Rpv7lxu40FUvRU5PooANTojZCMHCEEMvLYCeDM38xf0usq1SLOA7vkyEZAaNvGmDmPcqgpoReiyEC81UAH6f7WjESm1zM0VwkZAlEq8RBAnlAwayvstjK6mv9ABZAWUNbEOEwyxrB1WhRNxmhzvqC8hXhSYY5pZCawNksUGqR4S2GeyQIZD";
 
 	@GetMapping
 	public ResponseEntity<String> validate(HttpServletRequest request, @RequestParam Map<String,String> hub) {
@@ -50,8 +51,17 @@ public class DemoApplication {
 
 	@PostMapping
 	public ResponseEntity<?> home(HttpServletRequest request, @RequestBody Object entry) {
-		System.out.println(request.toString());
 		System.out.println(entry.toString());
+		try
+		{
+			Map<String, String> properties = BeanUtils.describe(entry);//Fetching object class details
+			for(Map.Entry<String, String> e : properties.entrySet())
+				System.out.println(e.getKey() + "->" + e.getValue());
+		}
+		catch(Exception e)
+		{
+			System.out.print(e);
+		}				
 		return ResponseEntity.ok().build();
 //		return ResponseEntity.badRequest().build();
 	}
