@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,8 +55,9 @@ public class DemoApplication {
 		System.out.println(entry.toString());
 		try
 		{
-			Map<String, String> properties = BeanUtils.describe(entry);//Fetching object class details
-			for(Map.Entry<String, String> e : properties.entrySet())
+			Map<String, Object> properties = new LinkedHashMap<>();
+			BeanUtils.populate(entry, properties);//Fetching object class details
+			for(Map.Entry<String, Object> e : properties.entrySet())
 				System.out.println(e.getKey() + "->" + e.getValue());
 		}
 		catch(Exception e)
