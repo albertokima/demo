@@ -1,11 +1,9 @@
 package com.example.demo;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootApplication
 @RestController
@@ -55,10 +55,8 @@ public class DemoApplication {
 		System.out.println(entry.toString());
 		try
 		{
-			Map<String, Object> properties = new LinkedHashMap<>();
-			BeanUtils.populate(entry, properties);//Fetching object class details
-			for(Map.Entry<String, Object> e : properties.entrySet())
-				System.out.println(e.getKey() + "->" + e.getValue());
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println(mapper.readValue(entry.toString(), Object.class).toString());
 		}
 		catch(Exception e)
 		{
