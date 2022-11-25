@@ -4,27 +4,29 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.whatsapp.WhatsappClient;
 import com.google.gson.Gson;
 
 @SpringBootApplication
 @RestController
-@RequestMapping("/webhook")
 public class DemoApplication {
 
+	@Autowired
+	private WhatsappClient waba;
+	
 	private static final String verify_token = "demo";
-	private static final String whatsapp_token = "EABZCZAzT6fLAUBAF8qXZAHnHmAuDfTLcaCFbZAIDBkoGogwtRY7Rpv7lxu40FUvRU5PooANTojZCMHCEEMvLYCeDM38xf0usq1SLOA7vkyEZAaNvGmDmPcqgpoReiyEC81UAH6f7WjESm1zM0VwkZAlEq8RBAnlAwayvstjK6mv9ABZAWUNbEOEwyxrB1WhRNxmhzvqC8hXhSYY5pZCawNksUGqR4S2GeyQIZD";
 
-	@GetMapping
+	@GetMapping("/webhook")
 	public ResponseEntity<String> validate(HttpServletRequest request, @RequestParam Map<String,String> hub) {
 		hub.entrySet().forEach(h->{
 			System.out.println(h.getKey() + ":" + h.getValue());
@@ -50,20 +52,29 @@ public class DemoApplication {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@PostMapping
+	@PostMapping("/webhook")
 	public ResponseEntity<?> home(HttpServletRequest request, @RequestBody Object entry) {
 		System.out.println(entry.toString());
 		try
 		{
 			Gson gson = new Gson();
-			System.out.println("Json:"+gson.toJson(entry));
+			System.out.println("Json:"+gson.toJsonTree(entry));
 		}
 		catch(Exception e)
 		{
-			System.out.print(e);
+			e.printStackTrace();
+			return ResponseEntity.badRequest().build();
 		}				
 		return ResponseEntity.ok().build();
-//		return ResponseEntity.badRequest().build();
+	}
+
+	@PostMapping("whatsapp")
+	public ResponseEntity<?> whatsapp(HttpServletRequest request, @RequestBody Object message) {
+		try {
+			return ResponseEntity.ok(waba.enviarMensagem(message));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	public static void main(String[] args) {
