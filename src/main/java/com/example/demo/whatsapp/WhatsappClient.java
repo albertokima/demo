@@ -28,16 +28,17 @@ public class WhatsappClient {
 	    //headers.set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 	    headers.set("Authorization", "Bearer " + authToken);
 	    final HttpEntity<Object> entity = new HttpEntity<Object>(request, headers);
-	    System.out.println(entity.getHeaders());
-	    System.out.println(entity.getBody());
+	    //System.out.println(entity.getHeaders());
+	    //System.out.println(entity.getBody());
 		String url = "https://graph.facebook.com/{version}/{phone-id}/messages";
 		RestTemplate template = new RestTemplate();
 		try {
 			ResponseEntity<ObjectNode> response = template.exchange(url, HttpMethod.POST, entity, ObjectNode.class, version, phoneNumberId);
-			System.out.println(response);
+			//System.out.println(response);
 			return response.getBody();
 		} catch (HttpStatusCodeException e) {
 			String body = e.getResponseBodyAsString();
+			System.err.println(body);
 			WhatsappErrorException wee = new WhatsappErrorException();
 			if (body == null || body.length()==0) {
 				wee = new WhatsappErrorException(e.getRawStatusCode(), e.getStatusText());

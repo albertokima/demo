@@ -54,11 +54,10 @@ public class DemoApplication {
 
 	@PostMapping("/webhook")
 	public ResponseEntity<?> home(HttpServletRequest request, @RequestBody Object entry) {
-		System.out.println(entry.toString());
 		try
 		{
 			Gson gson = new Gson();
-			System.out.println("Json:"+gson.toJsonTree(entry));
+			System.out.println(gson.toJsonTree(entry));
 		}
 		catch(Exception e)
 		{
@@ -70,11 +69,7 @@ public class DemoApplication {
 
 	@PostMapping("whatsapp")
 	public ResponseEntity<?> whatsapp(HttpServletRequest request, @RequestBody Object message) {
-		try {
-			return ResponseEntity.ok(waba.enviarMensagem(message));
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		return ResponseEntity.ok(waba.enviarMensagem(message));
 	}
 	
 	public static void main(String[] args) {
