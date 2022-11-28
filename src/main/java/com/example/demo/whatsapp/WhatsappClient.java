@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 @Component
 public class WhatsappClient {
 
-	private static final String authToken = "EABZCZAzT6fLAUBAGI5ZBVHxAdl6zXWGw78uxKMAQ7fEPkaFTa718u49OQJNtzaaZCYIClKZB9moM0qOFJDeWHuwZByCU86EuUZCBimcU5LlcZBuWnhsh3xgGETVCtH75moSFQheCHffHdWIPiXyaUGAyP0QYdSAf4jHp70HARZBLfKPguGNVjS5MCoxnD3cZCYFMIhEwRIgYx36iHpgdOHxJu4wiX834yw0iUZD";
+	private static final String authToken = "EABZCZAzT6fLAUBAAfIcRvzo6V4oDCZBEOhB8kWnBSfIF0r9z0TI1ZCJNcLRMgnnwIlcoX8ApNVaTSzQbKOVqiLTnuZAtusJLwhrnkl5LJPqDXyUa31XaZBmcDiNFMBZAguK4ZB5yeN3Gsx5RDNbwwGpda0KVDTgzjZBkgf3MyUewfIRJmnA9IKNVzbMHGTyo3zZA9npJ81XXcFaZCE4s5LfhIvJI782ZAij87coZD";
 	private static final String version = "v15.0";
 	private static final String phoneNumberId = "110483841864847";
 
